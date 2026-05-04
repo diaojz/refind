@@ -1,11 +1,25 @@
 const DEEPSEEK_BASE = 'https://api.deepseek.com/v1'
 
 function getApiKey() {
-  const key = import.meta.env.VITE_DEEPSEEK_API_KEY
-  if (!key) {
-    throw new Error('请在 .env 文件中设置 VITE_DEEPSEEK_API_KEY')
-  }
-  return key
+  // 优先从 localStorage 读取用户输入的 key
+  const userKey = localStorage.getItem('deepseek_api_key')
+  if (userKey) return userKey
+
+  // 开发环境回退到 .env
+  const envKey = import.meta.env.VITE_DEEPSEEK_API_KEY
+  if (envKey && envKey !== 'sk-your-key-here') return envKey
+
+  throw new Error('请先配置 DeepSeek API Key')
+}
+
+export function setApiKey(key) {
+  localStorage.setItem('deepseek_api_key', key)
+}
+
+export function hasApiKey() {
+  return !!localStorage.getItem('deepseek_api_key') ||
+         (import.meta.env.VITE_DEEPSEEK_API_KEY &&
+          import.meta.env.VITE_DEEPSEEK_API_KEY !== 'sk-your-key-here')
 }
 
 export async function callDeepSeek(systemPrompt, userContent) {
