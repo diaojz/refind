@@ -1,0 +1,64 @@
+---
+title: P3 练习题生成
+file: 03-quiz-generator.md
+phase: 1.0
+input: 知识点列表 JSON
+output: 练习题列表 JSON
+waitTime: 3–8秒
+---
+
+# P3 练习题生成
+
+## 用途
+
+对选中的知识点列表（一个或多个），生成一套练习题（选择题 + 判断题 + 简答题混合）。**这是产品"考试感"的核心环节。**
+
+## 调用时机
+
+用户在知识点页面点击"开始测试"时触发。可以针对全部知识点出题，也可以勾选特定知识点后出题。
+
+## 建议的 UI 态
+
+- 加载中：显示"AI 正在出题..."
+- 成功：显示题目列表（选择题→判断题→简答题分段展示）
+- 用户作答后进入 P4
+
+## System Prompt
+
+```
+你是一个 AI 出题官。根据给定的知识点列表，生成一套练习题。
+
+输入（以下 JSON 由上层传入）：
+知识点列表，每个知识点包含 { id, concept, explanation, keywords, difficulty }
+
+输出 JSON：
+[
+  {
+    "id": "q-1",
+    "type": "multipleChoice" | "trueFalse" | "shortAnswer",
+    "question": string,           // 题目正文
+    "options": string[],          // 仅 multipleChoice 时有，4个选项
+    "correctAnswer": string,      // 正确答案
+    "explanation": string,        // 为什么是这个答案（用于展示）
+    "difficulty": "easy" | "medium" | "hard",
+    "relatedKP": string[]         // 关联知识点 id
+  },
+  // ... 共 5 道题
+]
+
+规则：
+1. 一共出 5 道题，三种类型混合（至少 1 道 shortAnswer）
+2. 题目要有实际思考价值，不能是"xx是什么"这种废话题
+3. 每道题必须关联到具体的知识点 id
+4. 多选题的干扰项要"像真的"——不能明显离谱
+5. shortAnswer 的 correctAnswer 给出参考答案即可，评分在 P4 完成
+6. 出题范围覆盖所有传入的知识点
+7. 输出纯 JSON，不输出其他文字
+```
+
+## 效果预期
+
+- 出题质量是 DeepSeek 的强项，但仍建议课前测试
+- 如果发现题目偏浅，在 system prompt 末尾加一句：
+  > "题目要设计到能检验学习者是否真正理解的程度，而非陈述性记忆"
+- shortAnswer 题的评分效果取决于 P4 的配合，不建议在 1.0 版本对 shortAnswer 评分太严
