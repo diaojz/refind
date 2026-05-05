@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [vue(), tailwindcss()],
-  base: '/vibe-coding/', // GitHub Pages 仓库名
+  base: '/refind/', // GitHub Pages 仓库名
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
