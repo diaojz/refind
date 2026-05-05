@@ -42,10 +42,8 @@ jobs:
         run: |
           mkdir -p deploy/app
           cp -r refiner-course/app/dist/* deploy/app/
-          cp README.md deploy/
+          cp index.html deploy/
           touch deploy/.nojekyll
-          ls -la deploy/
-          ls -la deploy/app/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
