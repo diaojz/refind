@@ -57,7 +57,6 @@ function onReset() {
   step.value = 'input'
 }
 </script>
-</script>
 
 <template>
   <div class="min-h-screen bg-gradient-to-br from-amber-50 to-orange-100">
