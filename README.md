@@ -6,7 +6,7 @@
 
 将你的课堂笔记转化为结构化知识卡片和练习题
 
-[在线体验](https://diaojz.github.io/refind/) | [查看文档](./refiner-course/README.md)
+[在线体验](https://diaojz.github.io/refind/app/) | [查看文档](./refiner-course/README.md)
 
 </div>
 
@@ -40,7 +40,7 @@
 
 ### 在线使用
 
-访问 **https://diaojz.github.io/refind/**
+访问 **https://diaojz.github.io/refind/app/**
 
 首次使用需要配置 DeepSeek API Key：
 1. 访问 [DeepSeek 平台](https://platform.deepseek.com) 获取 API Key

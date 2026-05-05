@@ -38,13 +38,18 @@ jobs:
           cd refiner-course/app
           npm run build
 
+      - name: Prepare deployment structure
+        run: |
+          mkdir -p deploy/app
+          cp -r refiner-course/app/dist/* deploy/app/
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: refiner-course/app/dist
+          path: deploy
 
   deploy:
     environment:
