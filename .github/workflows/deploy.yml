@@ -42,6 +42,7 @@ jobs:
         run: |
           mkdir -p deploy/app
           cp -r refiner-course/app/dist/* deploy/app/
+          cp README.md deploy/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
