@@ -44,10 +44,11 @@ jobs:
           cp -r refiner-course/app/dist/* deploy/app/
           cp index.html deploy/
           touch deploy/.nojekyll
-          echo "=== Deploy directory structure ==="
-          find deploy -type f -o -type d
-          echo "=== File sizes ==="
-          du -sh deploy/*
+          echo "=== Verifying files exist ==="
+          ls -lah deploy/
+          ls -lah deploy/app/
+          echo "=== Checking file contents ==="
+          head -5 deploy/app/index.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
